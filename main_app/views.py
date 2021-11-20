@@ -12,3 +12,7 @@ def about(request):
 def syms_index(request):
     syms = Sym.objects.all()
     return render(request, 'syms/index.html', { 'syms': syms })
+
+def syms_detail(request, sym_id):
+    sym = Sym.objects.get(id=sym_id)
+    return render(request, 'syms/detail.html', { 'sym': sym })

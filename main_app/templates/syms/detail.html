@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Sym Details</h1>
+
+<div class="card">
+    <div class="card-content">
+        <span class="card-title">{{ sym.name }}</span>
+        <p>Gender: {{ sym.gender }}</p>
+        <p>Age: {{ sym.age }}</p>
+        <p>Occupation: {{ sym.occupation }}</p>
+        <p>Description: {{ sym.description }}</p>
+    </div>
+</div>
+
+{% endblock %}

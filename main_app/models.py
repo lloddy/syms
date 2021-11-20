@@ -1,16 +1,12 @@
 from django.db import models
 
 # Create your models here.
-class Sym:
-    def __init__(self, name, gender, age, occupation, description):
-        self.name = name
-        self.gender = gender
-        self.age = age
-        self.occupation = occupation
-        self.description = description
+class Sym(models.Model):
+    name = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10)
+    age = models.IntegerField()
+    occupation = models.TextField(max_length=250)
+    description = models.TextField(max_length=250)
 
-syms = [
-    Sym('Sam', 'Male', '33', 'Astronomer', "He's a bit of a wallflower."),
-    Sym('Constance', 'Female', '28', 'Rocket Scientist', "She's just brilliant!"),
-    Sym('Mick', 'Male', '52', 'Unemployed', "He's kind of a jerk."),
-]
+    def __str__(self):
+        return self.name

@@ -12,6 +12,10 @@
         <p>Occupation: {{ sym.occupation }}</p>
         <p>Description: {{ sym.description }}</p>
     </div>
+    <div class="card-action">
+        <a href="{% url 'syms_update' sym.id %}">EDIT</a>
+        <a href="{% url 'syms_delete' sym.id %}">DELETE</a>
+    </div>
 </div>
 
 {% endblock %}

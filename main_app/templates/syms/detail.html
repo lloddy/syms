@@ -23,8 +23,18 @@
         <form action="{% url 'add_feeding' sym.id %}" method="post">
             {% csrf_token %}
             {{ feeding_form.as_p }}
-            <input type="submit" class="btn" value="Adding Feeding" />
+            <input type="submit" class="btn" value="Add Feeding" />
         </form>
+        <br />
+        {% if sym.fed_for_today %}
+        <div class="card-panel teal-text center-align">
+            {{sym.name}} has been fed all meals for the today.
+        </div>
+        {% else %}
+        <div class="card-panel red-text center-align">
+            {{sym.name}} might be hungry.
+        </div>
+        {% endif %}
         <table class="striped">
             <thead>
                 <tr>

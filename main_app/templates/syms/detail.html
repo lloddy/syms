@@ -58,7 +58,7 @@
     <div class="col s6">
         <h3>{{ sym.name }}'s Afflictions</h3>
         {% if sym.afflictions.count %}
-        {% for affliction in sym.affliction.all %}
+        {% for affliction in sym.afflictions.all %}
         <div class="card">
             <div class="card-content">
                 <span class="card-title">
@@ -80,7 +80,7 @@
                     {{ affliction.name }}
                 </div>
                 <div class="card-action">
-                    <form action="" method="post">
+                    <form action="{% url 'assoc_affliction' sym.id affliction.id%}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="btn">Add</button>
                     </form>

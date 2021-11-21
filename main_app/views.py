@@ -65,3 +65,7 @@ class AfflictionUpdate(UpdateView):
 class AfflictionDelete(DeleteView):
     model = Affliction
     success_url = '/afflictions'
+
+def assoc_affliction(request, sym_id, affliction_id):
+    Sym.objects.get(id=sym_id).afflictions.add(affliction_id)
+    return redirect('detail', sym_id=sym_id)

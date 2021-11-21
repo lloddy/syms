@@ -1,6 +1,9 @@
+from django.core.exceptions import TooManyFieldsSent
+from django.db.models import fields
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Sym
+from django.views.generic import ListView, DetailView
+from .models import Sym, Affliction
 from .forms import FeedingForm
 
 # Create your views here.
@@ -42,3 +45,21 @@ class SymUpdate(UpdateView):
 class SymDelete(DeleteView):
     model = Sym
     success_url = '/syms/'
+
+class AfflictionList(ListView):
+    model = Affliction
+
+class AfflictionDetail(DetailView):
+    model = Affliction
+
+class AfflictionCreate(CreateView):
+    model = Affliction
+    fields = '__all__'
+
+class AfflictionUpdate(UpdateView):
+    model = Affliction
+    fields = ['name', 'description']
+
+class AfflictionDelete(DeleteView):
+    model = Affliction
+    success_url = '/afflictions'

@@ -53,6 +53,26 @@
         </table>
     </div>
 </div>
+<hr />
+<div class="row">
+    <div class="col s6">
+        <h3>{{ sym.name }}'s Afflictions</h3>
+        {% if sym.afflictions.count %}
+        {% for affliction in sym.affliction.all %}
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">
+                    {{ affliction.name }}
+                </span>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <h5>Is healthy and has no afflictions!</h5>
+        {% endif %}
+    </div>
+</div> 
+
 <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {

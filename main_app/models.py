@@ -10,12 +10,23 @@ MEALS = (
     ('D', 'Dinner'),
 )
 
+class Affliction(models.Model):
+    name: models.CharField(max_length=50)
+    description: models.TextField(max_length=250)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('afflictions_detail', kwargs={'pk': self.id})
+
 class Sym(models.Model):
     name = models.CharField(max_length=100)
     gender = models.CharField(max_length=10)
     age = models.IntegerField()
     occupation = models.TextField(max_length=250)
     description = models.TextField(max_length=250)
+    afflictions = models.ManyToManyField(Affliction)
 
     def __str__(self):
         return self.name
@@ -41,3 +52,4 @@ class Feeding(models.Model):
 
     class Meta:
         ordering = ['-date']
+

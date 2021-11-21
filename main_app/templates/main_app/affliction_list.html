@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Affliction List</h1>
+
+{% for affliction in affliction_list %}
+  <a href="{% url 'afflictions_detail' affliction.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ affliction.name }}</span>
+            <p>Description: {{ affliction.description }}</p>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

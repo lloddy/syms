@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Sym
+from .forms import FeedingForm
 
 # Create your views here.
 
@@ -16,7 +17,19 @@ def syms_index(request):
 
 def syms_detail(request, sym_id):
     sym = Sym.objects.get(id=sym_id)
-    return render(request, 'syms/detail.html', { 'sym': sym })
+    feeding_form = FeedingForm()
+    return render(request, 'syms/detail.html', {
+        'sym': sym,
+        'feeding_form': feeding_form
+        })
+
+def add_feeding(request, sym_id):
+    form = FeedingForm(request.POST)
+    if form.is_valid():
+        new_feeding = form.save(commit=False)
+        new_feeding.sym_id = sym_id
+        new_feeding.save()
+    return redirect('detail', sym_id=sym_id)
 
 class SymCreate(CreateView):
     model = Sym

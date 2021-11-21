@@ -71,8 +71,27 @@
         <h5>Is healthy and has no afflictions!</h5>
         {% endif %}
     </div>
+    <div class="col s6">
+        <h3>Available Afflictions</h3>
+        {% if afflictions.count %}
+            {% for affliction in afflictions.all %}
+            <div class="card">
+                <div class="card-content">
+                    {{ affliction.name }}
+                </div>
+                <div class="card-action">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">Add</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <h5>{{sym.name}} already has all afflictions available...go easy on them.</h5>
+        {% endif %}
+    </div>
 </div> 
-
 <script>
     var dateEl = document.getElementById('id_date');
     M.Datepicker.init(dateEl, {

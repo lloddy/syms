@@ -20,10 +20,12 @@ def syms_index(request):
 
 def syms_detail(request, sym_id):
     sym = Sym.objects.get(id=sym_id)
+    afflictions_sym_doesnt_have = Affliction.objects.exclude(id__in = sym.afflictions.all().values_list('id'))
     feeding_form = FeedingForm()
     return render(request, 'syms/detail.html', {
         'sym': sym,
-        'feeding_form': feeding_form
+        'feeding_form': feeding_form,
+        'afflictions': afflictions_sym_doesnt_have
         })
 
 def add_feeding(request, sym_id):
@@ -58,7 +60,7 @@ class AfflictionCreate(CreateView):
 
 class AfflictionUpdate(UpdateView):
     model = Affliction
-    fields = ['name', 'description']
+    fields = '__all__'
 
 class AfflictionDelete(DeleteView):
     model = Affliction

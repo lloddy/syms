@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from datetime import date
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -27,6 +28,7 @@ class Sym(models.Model):
     occupation = models.TextField(max_length=250)
     description = models.TextField(max_length=250)
     afflictions = models.ManyToManyField(Affliction)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

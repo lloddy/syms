@@ -19,4 +19,5 @@ urlpatterns = [
     path('afflictions<int:pk>/delete/', views.AfflictionDelete.as_view(), name='afflictions_delete'),
     path('syms/<int:sym_id>/assoc_affliction/<int:affliction_id>', views.assoc_affliction, name='assoc_affliction'),
     path('syms/<int:sym_id>/add_photo/', views.add_photo, name='add_photo'),
+    path('accounts/signup/', views.signup, name='signup')
 ]

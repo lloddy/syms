@@ -3,8 +3,14 @@ from django.db.models import fields
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 import uuid
 import boto3
+
 from .models import Sym, Affliction, Photo
 from .forms import FeedingForm
 
@@ -33,10 +39,12 @@ def home(request):
 def about(request):
     return render(request, 'about.html')
 
+@login_required
 def syms_index(request):
-    syms = Sym.objects.all()
+    syms = Sym.objects.filter(user=request.user)
     return render(request, 'syms/index.html', { 'syms': syms })
 
+@login_required
 def syms_detail(request, sym_id):
     sym = Sym.objects.get(id=sym_id)
     afflictions_sym_doesnt_have = Affliction.objects.exclude(id__in = sym.afflictions.all().values_list('id'))
@@ -47,6 +55,7 @@ def syms_detail(request, sym_id):
         'afflictions': afflictions_sym_doesnt_have
         })
 
+@login_required
 def add_feeding(request, sym_id):
     form = FeedingForm(request.POST)
     if form.is_valid():
@@ -58,33 +67,50 @@ def add_feeding(request, sym_id):
 class SymCreate(CreateView):
     model = Sym
     fields = '__all__'
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class SymUpdate(UpdateView):
     model = Sym
     fields = ['gender', 'occupation', 'description']
 
-class SymDelete(DeleteView):
+class SymDelete(LoginRequiredMixin, DeleteView):
     model = Sym
     success_url = '/syms/'
 
-class AfflictionList(ListView):
+class AfflictionList(LoginRequiredMixin, ListView):
     model = Affliction
 
-class AfflictionDetail(DetailView):
+class AfflictionDetail(LoginRequiredMixin, DetailView):
     model = Affliction
 
-class AfflictionCreate(CreateView):
-    model = Affliction
-    fields = '__all__'
-
-class AfflictionUpdate(UpdateView):
+class AfflictionCreate(LoginRequiredMixin, CreateView):
     model = Affliction
     fields = '__all__'
 
-class AfflictionDelete(DeleteView):
+class AfflictionUpdate(LoginRequiredMixin, UpdateView):
+    model = Affliction
+    fields = '__all__'
+
+class AfflictionDelete(LoginRequiredMixin, DeleteView):
     model = Affliction
     success_url = '/afflictions'
 
 def assoc_affliction(request, sym_id, affliction_id):
     Sym.objects.get(id=sym_id).afflictions.add(affliction_id)
     return redirect('detail', sym_id=sym_id)
+
+def signup (request):
+    error_message = ''
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            error_message = 'Invalid sign up, try again.'
+    form = UserCreationForm()
+    context = {'form': form, 'error_message': error_message}
+    return render(request, 'registration/signup.html', context)

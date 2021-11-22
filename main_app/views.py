@@ -8,7 +8,7 @@ import boto3
 from .models import Sym, Affliction, Photo
 from .forms import FeedingForm
 
-S3_BASE_URL = 'https//s3-us-west-1.amazonaws.com/'
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
 BUCKET = 'cat-collector-image-bucket'
 
 # Create your views here.

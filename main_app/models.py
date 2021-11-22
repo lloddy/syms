@@ -53,3 +53,9 @@ class Feeding(models.Model):
     class Meta:
         ordering = ['-date']
 
+class Photo(models.Model):
+     url = models.CharField(max_length=200)
+     sym = models.ForeignKey(Sym, on_delete=models.CASCADE)
+
+     def __str__(self):
+         return f'Photo for the sym_id: {self.sym_id} @{self.url}'

@@ -17,5 +17,6 @@ urlpatterns = [
     path('afflictions/create/', views.AfflictionCreate.as_view(), name='afflictions_create'),
     path('afflictions<int:pk>/update/', views.AfflictionUpdate.as_view(), name='afflictions_update'),
     path('afflictions<int:pk>/delete/', views.AfflictionDelete.as_view(), name='afflictions_delete'),
-    path('syms/<int:sym_id>/assoc_affliction/<int:affliction_id>', views.assoc_affliction, name='assoc_affliction')
+    path('syms/<int:sym_id>/assoc_affliction/<int:affliction_id>', views.assoc_affliction, name='assoc_affliction'),
+    path('syms/<int:sym_id>/add_photo/', views.add_photo, name='add_photo'),
 ]
